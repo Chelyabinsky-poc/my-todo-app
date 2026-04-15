@@ -153,3 +153,143 @@ h1 {
 .add-list button:hover {
   background: #27ae60;
 }
+/* Стили для трех статусов */
+.task {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #eee;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.task:hover {
+  background-color: #f8f9fa;
+  margin: 0 -0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 6px;
+}
+
+.task input[type="checkbox"] {
+  margin-right: 0.5rem;
+  transform: scale(1.3);
+  cursor: pointer;
+  accent-color: #2ecc71;
+}
+
+.task-text {
+  flex: 1;
+  font-size: 1rem;
+}
+
+/* Статус: Запланировано */
+.task-planned .task-text {
+  color: #7f8c8d;
+}
+
+.task-status-planned {
+  background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+  color: #6c757d;
+  border: 1px solid #adb5bd;
+}
+
+/* Статус: В процессе (с анимацией) */
+.task-in-progress .task-text {
+  color: #f39c12;
+  font-weight: 500;
+}
+
+.task-status-in-progress {
+  background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+  color: #856404;
+  border: 1px solid #ffd93d;
+  position: relative;
+  padding-left: 2.2rem !important;
+}
+
+/* Анимация загрузки */
+.task-status-in-progress::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  border: 2px solid #ffeaa7;
+  border-top: 2px solid #856404;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: translateY(-50%) rotate(0deg); }
+  100% { transform: translateY(-50%) rotate(360deg); }
+}
+
+/* Пульсация для всей задачи в процессе */
+.task-in-progress {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(255, 234, 167, 0.2);
+  }
+}
+
+/* Статус: Выполнена */
+.task-completed .task-text {
+  text-decoration: line-through;
+  color: #95a5a6;
+}
+
+.task-status-completed {
+  background: linear-gradient(135deg, #d4edda 0%, #a8e6cf 100%);
+  color: #155724;
+  border: 1px solid #3dd49b;
+}
+
+/* Общие стили для бейджей */
+.task-status {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  animation: statusChange 0.3s ease;
+}
+
+@keyframes statusChange {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Кнопка удаления */
+.delete-task {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  opacity: 0.4;
+  transition: all 0.2s;
+  padding: 0.25rem;
+  margin-left: auto;
+}
+
+.delete-task:hover {
+  opacity: 1;
+  transform: scale(1.2);
+}

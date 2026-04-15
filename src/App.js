@@ -6,12 +6,12 @@ const STORAGE_KEY = 'todoLists';
 
 function App() {
   const [lists, setLists] = useState(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : [
-      { id: Date.now(), title: 'Работа', tasks: [] },
-      { id: Date.now() + 1, title: 'Личное', tasks: [] }
-    ];
-  });
+  const saved = localStorage.getItem(STORAGE_KEY);
+  return saved ? JSON.parse(saved) : [
+    { id: Date.now(), title: 'Работа', tasks: [] },
+    { id: Date.now() + Math.floor(Math.random() * 1000), title: 'Личное', tasks: [] }
+  ];
+});
 
   const [newListTitle, setNewListTitle] = useState('');
 
@@ -21,29 +21,46 @@ function App() {
   }, [lists]);
 
   const addTask = (listId, text) => {
-    setLists(prev =>
-      prev.map(list =>
-        list.id === listId
-          ? { ...list, tasks: [...list.tasks, { id: Date.now(), text, completed: false }] }
-          : list
-      )
-    );
-  };
+  setLists(prev =>
+    prev.map(list =>
+      list.id === listId
+        ? { 
+            ...list, 
+            tasks: [...list.tasks, { 
+              id: Date.now(), 
+              text, 
+              status: 'planned' // Новый статус по умолчанию
+            }] 
+          }
+        : list
+    )
+  );
+};
 
-  const toggleTask = (listId, taskId) => {
-    setLists(prev =>
-      prev.map(list =>
-        list.id === listId
-          ? {
-              ...list,
-              tasks: list.tasks.map(task =>
-                task.id === taskId ? { ...task, completed: !task.completed } : task
-              )
-            }
-          : list
-      )
-    );
-  };
+const toggleTask = (listId, taskId) => {
+  const statusOrder = ['planned', 'in-progress', 'completed'];
+  
+  setLists(prev =>
+    prev.map(list =>
+      list.id === listId
+        ? {
+            ...list,
+            tasks: list.tasks.map(task => {
+              if (task.id === taskId) {
+                const currentIndex = statusOrder.indexOf(task.status || 'planned');
+                const nextIndex = (currentIndex + 1) % statusOrder.length;
+                return { 
+                  ...task, 
+                  status: statusOrder[nextIndex] 
+                };
+              }
+              return task;
+            })
+          }
+        : list
+    )
+  );
+};
 
   const deleteTask = (listId, taskId) => {
     setLists(prev =>
