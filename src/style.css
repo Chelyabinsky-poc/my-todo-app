@@ -153,7 +153,7 @@ h1 {
 .add-list button:hover {
   background: #27ae60;
 }
-/* Стили для трех статусов */
+
 .task {
   display: flex;
   align-items: center;
@@ -183,7 +183,7 @@ h1 {
   font-size: 1rem;
 }
 
-/* Статус: Запланировано */
+
 .task-planned .task-text {
   color: #7f8c8d;
 }
@@ -194,7 +194,7 @@ h1 {
   border: 1px solid #adb5bd;
 }
 
-/* Статус: В процессе (с анимацией) */
+
 .task-in-progress .task-text {
   color: #f39c12;
   font-weight: 500;
@@ -208,7 +208,6 @@ h1 {
   padding-left: 2.2rem !important;
 }
 
-/* Анимация загрузки */
 .task-status-in-progress::before {
   content: '';
   position: absolute;
@@ -228,7 +227,7 @@ h1 {
   100% { transform: translateY(-50%) rotate(360deg); }
 }
 
-/* Пульсация для всей задачи в процессе */
+
 .task-in-progress {
   animation: pulse 2s ease-in-out infinite;
 }
@@ -242,7 +241,7 @@ h1 {
   }
 }
 
-/* Статус: Выполнена */
+
 .task-completed .task-text {
   text-decoration: line-through;
   color: #95a5a6;
@@ -254,7 +253,7 @@ h1 {
   border: 1px solid #3dd49b;
 }
 
-/* Общие стили для бейджей */
+
 .task-status {
   font-size: 0.75rem;
   padding: 0.25rem 0.75rem;
@@ -277,7 +276,7 @@ h1 {
   }
 }
 
-/* Кнопка удаления */
+
 .delete-task {
   background: none;
   border: none;

@@ -15,7 +15,6 @@ function App() {
 
   const [newListTitle, setNewListTitle] = useState('');
 
-  // Сохраняем в localStorage при изменении списков
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(lists));
   }, [lists]);
