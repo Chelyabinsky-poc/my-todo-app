@@ -1,7 +1,11 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { toggleTask, deleteTask, addTask, deleteList } from '../features/todoSlice';
 import TodoInput from './TodoInput.js';
 
-export default function TodoList({ list, onToggleTask, onDeleteTask, onAddTask, onDeleteList }) {
+export default function TodoList({ list }) {
+  const dispatch = useDispatch();
+
   const getStatusLabel = (status) => {
     switch(status) {
       case 'planned': return '📋 Запланировано';
@@ -15,9 +19,13 @@ export default function TodoList({ list, onToggleTask, onDeleteTask, onAddTask, 
     <div className="list">
       <div className="list-header">
         <h2 className="list-title">{list.title}</h2>
-        <button className="delete-list" onClick={onDeleteList}>✕</button>
+        <button 
+          className="delete-list" 
+          onClick={() => dispatch(deleteList(list.id))}
+        >
+          ✕
+        </button>
       </div>
-      
       <ul className="tasks">
         {list.tasks.map((task) => (
           <li
@@ -27,7 +35,7 @@ export default function TodoList({ list, onToggleTask, onDeleteTask, onAddTask, 
             <input
               type="checkbox"
               checked={(task.status || 'planned') === 'completed'}
-              onChange={() => onToggleTask(list.id, task.id)}
+              onChange={() => dispatch(toggleTask(list.id, task.id))}
               id={`task-${task.id}`}
             />
             <label 
@@ -42,7 +50,7 @@ export default function TodoList({ list, onToggleTask, onDeleteTask, onAddTask, 
             </span>
             <button 
               className="delete-task" 
-              onClick={() => onDeleteTask(list.id, task.id)}
+              onClick={() => dispatch(deleteTask(list.id, task.id))}
               title="Удалить задачу"
             >
               🗑
@@ -50,7 +58,9 @@ export default function TodoList({ list, onToggleTask, onDeleteTask, onAddTask, 
           </li>
         ))}
       </ul>
-      <TodoInput onAdd={(text) => onAddTask(list.id, text)} />
+      <TodoInput 
+        onAdd={(text) => dispatch(addTask({ listId: list.id, text }))} 
+      />
     </div>
   );
 }
