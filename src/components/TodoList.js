@@ -19,7 +19,7 @@ export default function TodoList({ list }) {
     <div className="list">
       <div className="list-header">
         <h2 className="list-title">{list.title}</h2>
-        <button className="delete-list" onClick={() => dispatch(deleteList(list.id))}>✕</button>
+        <button className="delete-list" onClick={onDeleteList}>✕</button>
       </div>
       <ul className="tasks">
         {list.tasks.map((task) => (
@@ -27,7 +27,7 @@ export default function TodoList({ list }) {
             <input
               type="checkbox"
               checked={(task.status || 'planned') === 'completed'}
-              onChange={() => dispatch(toggleTask({ listId: list.id, taskId: task.id }))}
+              onChange={() => onToggleTask(list.id, task.id)}
               id={`task-${task.id}`}
             />
             <label htmlFor={`task-${task.id}`} className="task-text">
@@ -36,13 +36,17 @@ export default function TodoList({ list }) {
             <span className={`task-status task-status-${task.status || 'planned'}`}>
               {getStatusLabel(task.status)}
             </span>
-            <button className="delete-task" onClick={() => dispatch(deleteTask({ listId: list.id, taskId: task.id }))}>
+            <button 
+              className="delete-task" 
+              onClick={() => onDeleteTask(list.id, task.id)}
+              title="Удалить задачу"
+            >
               🗑
             </button>
           </li>
         ))}
       </ul>
-      <TodoInput onAdd={(text) => dispatch(addTask({ listId: list.id, text }))} />
+      <TodoInput onAdd={(text) => onAddTask(list.id, text)} />
     </div>
   );
 }

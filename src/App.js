@@ -15,19 +15,31 @@ function App() {
     }
   };
 
+  const deleteList = (listId) => {
+    if (lists.length <= 1) return; // Защита от удаления последнего списка
+    setLists(prev => prev.filter(list => list.id !== listId));
+  };
+
   return (
     <div className="app">
       <h1>Мой To-Do List</h1>
       <div className="lists-container">
         {lists.map(list => (
-          <TodoList key={list.id} list={list} />
+          <TodoList
+            key={list.id}
+            list={list}
+            onToggleTask={toggleTask}
+            onDeleteTask={deleteTask}
+            onAddTask={addTask}
+            onDeleteList={() => deleteList(list.id)}
+          />
         ))}
       </div>
       <div className="add-list">
         <input
           type="text"
           value={newListTitle}
-          onChange={(e) => dispatch(setNewListTitle(e.target.value))}
+          onChange={(e) => setNewListTitle(e.target.value)}
           placeholder="Название нового списка..."
         />
         <button onClick={handleAddList}>+ Список</button>
