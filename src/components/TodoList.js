@@ -19,10 +19,8 @@ export default function TodoList({ list }) {
   };
 
   const handleToggleTask = (task) => {
-    // Сначала локально переключаем
     dispatch(toggleTaskLocal({ listId: list.id, taskId: task.id }));
     
-    // Если задача с бекенда (имеет id < 1000 примерно) — отправляем обновление
     if (task.id <= 200) {
       const newStatus = task.status === 'completed' ? 'planned' : 'completed';
       dispatch(updateTodo({ 
@@ -69,9 +67,9 @@ export default function TodoList({ list }) {
         ))}
       </ul>
       <TodoInput onAdd={(text) => {
-        // Локально добавляем
+
         dispatch(addTaskLocal({ listId: list.id, text }));
-        // И отправляем на бекенд
+
         dispatch(createTodo({
           title: text,
           completed: false,

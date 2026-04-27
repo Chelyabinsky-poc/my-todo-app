@@ -11,7 +11,6 @@ function App() {
   const loading = useSelector(state => state.todo.loading);
   const error = useSelector(state => state.todo.error);
 
-  // Загружаем задачи с бекенда при первом рендере
   useEffect(() => {
     dispatch(fetchTodos(1)); // userId = 1
   }, [dispatch]);
